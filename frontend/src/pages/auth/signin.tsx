@@ -1,8 +1,13 @@
+import WalletModal from "../../modals/walletmodal"
+
 const Signin: React.FC = () => {
   return (
-    <div>
-      SIGNIN
-    </div>
+    <>
+      <div>
+        SIGNIN
+      </div>
+      <WalletModal />
+    </>
   )
 }
 
