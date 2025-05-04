@@ -1,9 +1,11 @@
+import { IoNotifications } from "react-icons/io5"
+
 const Header: React.FC = () => {
   return (
-    <header className="flex justify-between">
-      <p>paymesh</p>
+    <header className="row-span-1 flex justify-between items-center">
+      <img src="/assets/paymesh-full-logo.svg" alt="paymesh-full-logo" width={100} className="" />
       <div className="flex gap-2">
-        <p>n</p>
+        <IoNotifications />
         <p>o</p>
       </div>
     </header>

@@ -9,7 +9,7 @@ const Flashscreen: React.FC = () => {
 
   return (
     <div className="bg-dark-shade h-screen w-full text-text p-2 flex justify-center items-center">
-      FLASHSCREEN
+      <img src="/assets/paymesh-full-logo.svg" alt="paymesh-full-logo" width={200} />
     </div>
   )
 }
