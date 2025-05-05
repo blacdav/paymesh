@@ -5,7 +5,7 @@ const Header: React.FC = () => {
     <header className="row-span-1 flex justify-between items-center">
       <img src="/assets/paymesh-full-logo.svg" alt="paymesh-full-logo" width={100} className="" />
       <div className="flex gap-2">
-        <IoNotifications />
+        <IoNotifications className="text-secondary" />
         <p>o</p>
       </div>
     </header>
