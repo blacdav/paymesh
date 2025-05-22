@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const LoaderModal: React.FC = () => {
-    const [loading, setIsLoading] = useState(false);
+    const [loading, setIsLoading] = useState<boolean>(false);
 
     const closeModal = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
