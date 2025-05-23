@@ -1,0 +1,66 @@
+module paymesh_contract::organization {
+    use std::string::String;
+    // use sui::object::{Self, UID, borrow_global};
+    // use sui::storage;
+    // use sui::clock::Clock;
+
+    public struct StaffDetails has copy, drop, store {
+        // id: UID,
+        staff_address: address,
+        staff_role: String,
+        staff_salary_amount: u64,
+        staff_payment_frequency: u64,
+    }
+
+    public struct Payroll has key, store {
+        id: UID,
+        owner: address,
+        staffs: vector<StaffDetails>
+    }
+    // error boundaries
+    const E_NOT_OWNER: u64 = 0;
+
+    public fun init_payroll(ctx: &mut TxContext) {
+        let staff_list = Payroll {
+            id: object::new(ctx),
+            owner: tx_context::sender(ctx),
+            staffs: vector::empty<StaffDetails>(),
+        };
+        transfer::transfer(staff_list, tx_context::sender(ctx));
+    }
+
+    fun create_staff(
+        addrs: address,
+        role: String,
+        salary: u64,
+        frequency: u64,
+        _ctx: &mut TxContext,
+    ): StaffDetails {
+        StaffDetails {
+            staff_address: addrs,
+            staff_role: role,
+            staff_salary_amount: salary,
+            staff_payment_frequency: frequency,
+        }
+    }
+
+    public entry fun add_to_payroll(
+        staff_list: &mut Payroll,
+        addrs: address,
+        role: String,
+        salary: u64,
+        frequency: u64,
+        ctx: &mut TxContext,
+    ) {
+        // let id = object::new(ctx);
+        assert!(tx_context::sender(ctx) == staff_list.owner, E_NOT_OWNER);
+
+        let new_staff = create_staff(addrs, role, salary, frequency, ctx);
+        
+        vector::push_back(&mut staff_list.staffs, new_staff);
+    }
+
+    public fun get_staffs_payroll(payroll: &Payroll): &vector<StaffDetails> {
+        &payroll.staffs
+    }
+}
