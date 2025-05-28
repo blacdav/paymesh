@@ -60,12 +60,26 @@ module paymesh_contract::organization {
         vector::push_back(&mut staff_list.staffs, new_staff);
     }
 
-    // public fun get_staffs_payroll(payroll: &Payroll): &vector<StaffDetails> {
-    //     &payroll.staffs
-    // }
+    public fun get_staffs_payroll(payroll: &Payroll): &vector<StaffDetails> {
+        &payroll.staffs
+    }
 
-    // public entry fun read_staffs_payroll(payroll: Payroll): vector<StaffDetails> {
-    //     // let payroll = borrow_global(payroll_id); // ✅ Corrected
-    //     payroll.staffs // ✅ Return a concrete value
+    // public fun remove_staffs_from_payraoll(
+    //     // payroll: &Payroll,
+    //     staff_address: address
+    // ): &vector<StaffDetails> {
+    //     let payroll_length = vector::length(&StaffDetails);
+    //     let i = 0;
+    //     let sender = tx_context::sender(ctx);
+
+    //     assert!(sender == item.owner, E_NOT_OWNER);
+
+    //     while(i < payroll_length) {
+    //         let staff_ref = vector::borrow(&StaffDetails, i);
+    //         let addrs = &staff_ref.staff_address;
+
+
+    //     };
+    //     // assert!(staff_address, error_message);
     // }
 }

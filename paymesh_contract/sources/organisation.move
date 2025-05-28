@@ -1,5 +1,7 @@
 module paymesh_contract::organization {
     use std::string::String;
+    use sui::event;
+
     // use sui::object::{Self, UID, borrow_global};
     // use sui::storage;
     // use sui::clock::Clock;
@@ -17,16 +19,18 @@ module paymesh_contract::organization {
         owner: address,
         staffs: vector<StaffDetails>
     }
+    
     // error boundaries
     const E_NOT_OWNER: u64 = 0;
 
-    public fun init_payroll(ctx: &mut TxContext) {
+    fun init(ctx: &mut TxContext) {
         let staff_list = Payroll {
             id: object::new(ctx),
             owner: tx_context::sender(ctx),
             staffs: vector::empty<StaffDetails>(),
         };
         transfer::transfer(staff_list, tx_context::sender(ctx));
+        // transfer::share_object(staff_list);
     }
 
     fun create_staff(
@@ -56,6 +60,7 @@ module paymesh_contract::organization {
         assert!(tx_context::sender(ctx) == staff_list.owner, E_NOT_OWNER);
 
         let new_staff = create_staff(addrs, role, salary, frequency, ctx);
+        event::emit(new_staff);
         
         vector::push_back(&mut staff_list.staffs, new_staff);
     }
@@ -63,4 +68,23 @@ module paymesh_contract::organization {
     public fun get_staffs_payroll(payroll: &Payroll): &vector<StaffDetails> {
         &payroll.staffs
     }
+
+    // public fun remove_staffs_from_payraoll(
+    //     // payroll: &Payroll,
+    //     staff_address: address
+    // ): &vector<StaffDetails> {
+    //     let payroll_length = vector::length(&StaffDetails);
+    //     let i = 0;
+    //     let sender = tx_context::sender(ctx);
+
+    //     assert!(sender == item.owner, E_NOT_OWNER);
+
+    //     while(i < payroll_length) {
+    //         let staff_ref = vector::borrow(&StaffDetails, i);
+    //         let addrs = &staff_ref.staff_address;
+
+
+    //     };
+    //     // assert!(staff_address, error_message);
+    // }
 }
